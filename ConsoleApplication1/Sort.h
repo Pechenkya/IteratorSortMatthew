@@ -3,6 +3,9 @@
 #include <vector>
 #include <string>
 
+template<typename Itr>
+using itr_traits = std::iterator_traits<typename std::remove_reference<Itr>::type>;
+
 template<typename T>
 class Sort
 {
@@ -12,7 +15,7 @@ public:
 	template<typename Itr>
 	static void sort(Itr&& begin, Itr&& end, bool stable = false)
 	{
-		typename std::iterator_traits<Itr>::iterator_category itr_cat;
+		typename itr_traits<Itr>::iterator_category itr_cat;
 		sort_dispatcher(std::forward<Itr>(begin), std::forward<Itr>(end), stable, itr_cat);
 	}
 
@@ -30,14 +33,14 @@ private:
 			{
 				t = *temp_itr++;
 			}
-			merge_sort(std::forward<Itr>(begin), std::forward<Itr>(end - 1), std::forward<Itr>(aux->begin()), std::forward<Itr>(aux->end() - 1));
+			merge_sort(begin, end - 1, aux->begin(), aux->end() - 1);
 			delete aux;
 			aux = nullptr;
 		}
 		else
 		{
 			std::cout << "Quick Sort(unstable): " << typeid(T).name() << std::endl;
-			quick_sort(std::forward<Itr>(begin), std::forward<Itr>(end - 1));
+			quick_sort(begin, end - 1);
 		}
 	}
 
@@ -65,10 +68,10 @@ private:
 
 	
 
-	template<typename Itr>
-	static void merge_sort(const Itr& begin, const Itr& end, const Itr& aux_begin, const Itr& aux_end)
+	template<typename Itr1, typename Itr2>
+	static void merge_sort(const Itr1& begin, const Itr1& end, const Itr2& aux_begin, const Itr2& aux_end)
 	{
-		typename std::iterator_traits<Itr>::difference_type length = end - begin;
+		typename itr_traits<Itr1>::difference_type length = end - begin;
 
 		if (length <= 7)
 		{
@@ -76,13 +79,14 @@ private:
 			return;
 		}
 
-		typename std::remove_reference<Itr>::type median = begin + (length / 2);
-		typename std::remove_reference<Itr>::type aux_median = aux_begin + (length / 2);
+		typename std::remove_reference<Itr1>::type median = begin + (length / 2);
+		typename std::remove_reference<Itr2>::type aux_median = aux_begin + (length / 2);
 
 		merge_sort(aux_begin, aux_median, begin, median);
 		merge_sort(aux_median + 1, aux_end, median + 1, end);
 
-		for (typename std::remove_reference<Itr>::type l_counter = aux_begin, r_counter = aux_median + 1, main_counter = begin;
+		typename std::remove_reference<Itr1>::type main_counter = begin;
+		for (typename std::remove_reference<Itr2>::type l_counter = aux_begin, r_counter = aux_median + 1;
 			l_counter <= aux_median || r_counter <= aux_end;
 			++main_counter)
 		{
@@ -127,7 +131,7 @@ private:
 
 
 	template<typename Itr>
-	static typename std::iterator_traits<Itr>::difference_type dual_pivot_partition(const Itr& pivot1, const Itr& pivot2, Itr&& less_n, Itr&& greater)
+	static typename itr_traits<Itr>::difference_type dual_pivot_partition(const Itr& pivot1, const Itr& pivot2, Itr&& less_n, Itr&& greater)
 	{
 		for (typename std::remove_reference<Itr>::type k = less_n; k <= greater; ++k)
 		{
@@ -162,7 +166,7 @@ private:
 	template<typename Itr>
 	static void quick_sort(const Itr& begin, const Itr& end, unsigned int d = 0)
 	{
-		typename std::iterator_traits<Itr>::difference_type length = end - begin;
+		typename itr_traits<Itr>::difference_type length = end - begin;
 
 
 		//For range of 2-28 elements using insertion sort
@@ -176,39 +180,38 @@ private:
 		get_medians(begin, end, length);
 
 		//Pivots
-		typename std::iterator_traits<Itr>::value_type pivot1 = *begin;
-		typename std::iterator_traits<Itr>::value_type pivot2 = *end;
+		typename itr_traits<Itr>::value_type pivot1 = *begin;
+		typename itr_traits<Itr>::value_type pivot2 = *end;
 
 		//Pointers
 		typename std::remove_reference<Itr>::type less = begin + 1;
 		typename std::remove_reference<Itr>::type greater = end - 1;
 
 		//Sorting
-		typename std::iterator_traits<Itr>::difference_type dist = dual_pivot_partition(begin, end, std::forward<Itr>(less), std::forward<Itr>(greater));
+		typename itr_traits<Itr>::difference_type dist = dual_pivot_partition(begin, end, std::forward<Itr>(less), std::forward<Itr>(greater));
 
 		//Sorting subarrays
 		
 		if(less - begin >= 2)
 			quick_sort(begin, less - 2);
-			
-			quick_sort(greater + 2, end);
+		quick_sort(greater + 2, end);
 
 		//For equal elements
 		if (dist > length - 13 && pivot1 != pivot2)
 		{
-			for (Itr k = less; k <= greater; ++k)
+			for (typename std::remove_reference<Itr>::type k = less; k <= greater; ++k)
 			{
-				if (*k == pivot1)
+				if (!(*k < pivot1 || pivot1 < *k))
 				{
 					swap(k, less);
 					++less;
 				}
-				else if (*k == pivot2)
+				else if (!(*k < pivot2 || pivot2 < *k))
 				{
 					swap(k, greater);
 					--greater;
 
-					if (*k == pivot1)
+					if (!(*k < pivot1 || pivot1 < *k))
 					{
 						swap(k, less);
 						++less;
@@ -256,7 +259,7 @@ private:
 	template<typename Itr>
 	static void swap(const Itr& a, const Itr& b)
 	{
-		typename std::iterator_traits<Itr>::value_type temp = *a;
+		typename itr_traits<Itr>::value_type temp = *a;
 		*a = *b;
 		*b = temp;
 	}
