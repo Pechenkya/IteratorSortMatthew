@@ -29,5 +29,11 @@
   </ItemGroup>
   <ItemGroup>
     <Text Include="Sorted vector.txt" />
+    <Text Include="Words.txt">
+      <Filter>Файлы ресурсов</Filter>
+    </Text>
+    <Text Include="Sorted words.txt">
+      <Filter>Файлы ресурсов</Filter>
+    </Text>
   </ItemGroup>
 </Project>

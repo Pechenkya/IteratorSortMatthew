@@ -2,6 +2,7 @@
 #include <iostream>
 #include <fstream>
 #include <vector>
+#include <list>
 #include <utility> //std::pair
 #include <string>
 #include <cstdlib>
@@ -59,15 +60,18 @@ int main()
 	//std::ofstream outw("Sorted words.txt");
 	std::ofstream outw("Sorted vector.txt");
 
-	int size = 100000000;
+	int size = 10000000;
+
+	//std::list<int> list;
 
 	std::vector <int> vector_elements(size);
 	//std::vector <std::string> vector_elements{ "Back", "Hall", "Anime", "Counter-Strike", "Horisontal", "GGWP", "School", "Piramide", "Hall", "Matthew-Gay" };
 
 	for (int i = 1; i < size; i++)
 	{
+		//list.push_back(rand()*3 % (rand() % (i+5) + 1));
 		//vector_elements.push_back(rand() % i);
-		vector_elements.at(i - 1) = rand() % i;
+		vector_elements.at(i - 1) = rand() * 3 % (rand() % (i + 5) + 1);
 		//vector_elements.at(i - 1) = 0;
 		//vector_elements.at(i - 1) = rand() % 2;
 	}
@@ -80,7 +84,7 @@ int main()
 	//}
 
 
-	shuffle(vector_elements);
+	//shuffle(vector_elements);
 
 
 	std::cout << "Started sort(my sort)" << std::endl;

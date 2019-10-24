@@ -1,7 +1,7 @@
 #pragma once
 #include <iterator>
 #include <vector>
-
+#include <string>
 
 template<typename T>
 class Sort
@@ -22,7 +22,7 @@ private:
 	{
 		if (stable)
 		{
-			std::cout << "Merge" << std::endl;
+			std::cout << "Merge(stable): " << typeid(T).name() << std::endl;
 
 			aux = new std::vector<T>(end - begin);
 			typename std::remove_reference<Itr>::type temp_itr = begin;
@@ -36,7 +36,7 @@ private:
 		}
 		else
 		{
-			std::cout << "Quick Sort" << std::endl;
+			std::cout << "Quick Sort(unstable): " << typeid(T).name() << std::endl;
 			quick_sort(std::forward<Itr>(begin), std::forward<Itr>(end - 1));
 		}
 	}
@@ -44,12 +44,14 @@ private:
 	template<typename Itr>
 	static void sort_dispatcher(Itr&& begin, Itr&& end, bool stable, std::forward_iterator_tag&)
 	{
+		std::cout << "Lower iterator category sort: " << std::endl;
+
 		aux = new std::vector<T>();
 		for (typename std::remove_reference<Itr>::type temp_itr = begin; temp_itr != end; temp_itr++)
 		{
 			aux->push_back(*temp_itr);
 		}
-		sort(std::forward<Itr>(aux->begin()), std::forward<Itr>(aux->end()), false); //TUT FALSE IDITE NAHOOI
+		sort(aux->begin(), aux->end(), false);
 
 		auto aux_itr = aux->begin();
 		for (typename std::remove_reference<Itr>::type temp_itr = begin; temp_itr != end; temp_itr++, aux_itr++)
@@ -158,7 +160,7 @@ private:
 
 
 	template<typename Itr>
-	static void quick_sort(const Itr& begin, const Itr& end)
+	static void quick_sort(const Itr& begin, const Itr& end, unsigned int d = 0)
 	{
 		typename std::iterator_traits<Itr>::difference_type length = end - begin;
 
@@ -259,6 +261,8 @@ private:
 		*b = temp;
 	}
 
+	template<typename Type>
+	static int get_char(const Type& a, int n);
 
 };
 
@@ -267,4 +271,59 @@ std::vector<T>* Sort<T>::aux = nullptr;
 
 template<>
 template<typename Itr>
-void Sort<std::string>::quick_sort(const Itr& begin, const Itr& end);
+bool Sort<std::string>::less(const Itr& a, const Itr& b)
+{
+	int length = std::min((*a).length(), (*b).length());
+	for (int c = 0; c < length; c++)
+	{
+		if (tolower((*a)[c]) < tolower((*b)[c]))
+			return true;
+		if (tolower((*a)[c]) > tolower((*b)[c]))
+			return false;
+	}
+}
+
+template<>
+template<>
+int Sort<std::string>::get_char(const std::string & a, int n)
+{
+	if (n < a.length())
+		return a[n];
+	else
+		return -1;
+}
+
+template<>
+template<typename Itr>
+void Sort<std::string>::quick_sort(const Itr& begin, const Itr& end, unsigned int d)
+{
+	if (end - begin <= 5)
+	{
+		insertion_sort(end, begin);
+		return;
+	}
+
+	typename std::remove_reference<Itr>::type l_itr = begin;
+	typename std::remove_reference<Itr>::type g_itr = end;
+	typename std::remove_reference<Itr>::type i = begin + 1;
+
+	int pivot = get_char(*begin, d);
+
+
+	while (i <= g_itr)
+	{
+		int c = get_char(*i, d);
+
+		if (c < pivot)
+			swap(l_itr++, i++);
+		else if (pivot < c)
+			swap(i, g_itr--);
+		else
+			i++;
+	}
+
+	quick_sort(begin, l_itr - 1, d);
+	if (pivot >= 0) quick_sort(l_itr, g_itr, d + 1);
+	quick_sort(g_itr + 1, end, d);
+
+}

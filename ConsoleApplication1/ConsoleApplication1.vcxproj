@@ -160,6 +160,8 @@
   </ItemGroup>
   <ItemGroup>
     <Text Include="Sorted vector.txt" />
+    <Text Include="Sorted words.txt" />
+    <Text Include="Words.txt" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

@@ -1,28 +1,28 @@
 ﻿  sort2.cpp
-d:\progs\visualstudioprojects\sort2\consoleapplication1\iteratorsortmatthew\consoleapplication1\sort.h(104): warning C4244: инициализация: преобразование "Diff_type" в "int", возможна потеря данных
+d:\progs\visualstudioprojects\sort2\consoleapplication1\iteratorsortmatthew\consoleapplication1\sort.h(106): warning C4244: инициализация: преобразование "Diff_type" в "int", возможна потеря данных
           with
           [
               Diff_type=__int64
           ]
-  d:\progs\visualstudioprojects\sort2\consoleapplication1\iteratorsortmatthew\consoleapplication1\sort.h(174): note: выполняется компиляция ссылки на экземпляр шаблон функции "void Sort<int>::get_medians<Itr,__int64>(const Itr &,const Itr &,Diff_type)"
-          with
-          [
-              Itr=std::_Vector_iterator<std::_Vector_val<std::_Simple_types<int>>>,
-              Diff_type=__int64
-          ]
-  d:\progs\visualstudioprojects\sort2\consoleapplication1\iteratorsortmatthew\consoleapplication1\sort.h(174): note: выполняется компиляция ссылки на экземпляр шаблон функции "void Sort<int>::get_medians<Itr,__int64>(const Itr &,const Itr &,Diff_type)"
+  d:\progs\visualstudioprojects\sort2\consoleapplication1\iteratorsortmatthew\consoleapplication1\sort.h(176): note: выполняется компиляция ссылки на экземпляр шаблон функции "void Sort<int>::get_medians<Itr,__int64>(const Itr &,const Itr &,Diff_type)"
           with
           [
               Itr=std::_Vector_iterator<std::_Vector_val<std::_Simple_types<int>>>,
               Diff_type=__int64
           ]
-  d:\progs\visualstudioprojects\sort2\consoleapplication1\iteratorsortmatthew\consoleapplication1\sort.h(40): note: выполняется компиляция ссылки на экземпляр шаблон функции "void Sort<int>::quick_sort<_Ty>(const Itr &,const Itr &)"
+  d:\progs\visualstudioprojects\sort2\consoleapplication1\iteratorsortmatthew\consoleapplication1\sort.h(176): note: выполняется компиляция ссылки на экземпляр шаблон функции "void Sort<int>::get_medians<Itr,__int64>(const Itr &,const Itr &,Diff_type)"
+          with
+          [
+              Itr=std::_Vector_iterator<std::_Vector_val<std::_Simple_types<int>>>,
+              Diff_type=__int64
+          ]
+  d:\progs\visualstudioprojects\sort2\consoleapplication1\iteratorsortmatthew\consoleapplication1\sort.h(40): note: выполняется компиляция ссылки на экземпляр шаблон функции "void Sort<int>::quick_sort<_Ty>(const Itr &,const Itr &,unsigned int)"
           with
           [
               _Ty=std::_Vector_iterator<std::_Vector_val<std::_Simple_types<int>>>,
               Itr=std::_Vector_iterator<std::_Vector_val<std::_Simple_types<int>>>
           ]
-  d:\progs\visualstudioprojects\sort2\consoleapplication1\iteratorsortmatthew\consoleapplication1\sort.h(40): note: выполняется компиляция ссылки на экземпляр шаблон функции "void Sort<int>::quick_sort<_Ty>(const Itr &,const Itr &)"
+  d:\progs\visualstudioprojects\sort2\consoleapplication1\iteratorsortmatthew\consoleapplication1\sort.h(40): note: выполняется компиляция ссылки на экземпляр шаблон функции "void Sort<int>::quick_sort<_Ty>(const Itr &,const Itr &,unsigned int)"
           with
           [
               _Ty=std::_Vector_iterator<std::_Vector_val<std::_Simple_types<int>>>,
@@ -40,13 +40,13 @@ d:\progs\visualstudioprojects\sort2\consoleapplication1\iteratorsortmatthew\cons
               _Ty=std::_Vector_iterator<std::_Vector_val<std::_Simple_types<int>>>,
               Itr=std::_Vector_iterator<std::_Vector_val<std::_Simple_types<int>>>
           ]
-  d:\progs\visualstudioprojects\sort2\consoleapplication1\iteratorsortmatthew\consoleapplication1\sort2.cpp(88): note: выполняется компиляция ссылки на экземпляр шаблон функции "void Sort<int>::sort<std::_Vector_iterator<std::_Vector_val<std::_Simple_types<_Ty>>>>(Itr &&,Itr &&,bool)"
+  d:\progs\visualstudioprojects\sort2\consoleapplication1\iteratorsortmatthew\consoleapplication1\sort2.cpp(92): note: выполняется компиляция ссылки на экземпляр шаблон функции "void Sort<int>::sort<std::_Vector_iterator<std::_Vector_val<std::_Simple_types<_Ty>>>>(Itr &&,Itr &&,bool)"
           with
           [
               _Ty=int,
               Itr=std::_Vector_iterator<std::_Vector_val<std::_Simple_types<int>>>
           ]
-  d:\progs\visualstudioprojects\sort2\consoleapplication1\iteratorsortmatthew\consoleapplication1\sort2.cpp(88): note: выполняется компиляция ссылки на экземпляр шаблон функции "void Sort<int>::sort<std::_Vector_iterator<std::_Vector_val<std::_Simple_types<_Ty>>>>(Itr &&,Itr &&,bool)"
+  d:\progs\visualstudioprojects\sort2\consoleapplication1\iteratorsortmatthew\consoleapplication1\sort2.cpp(92): note: выполняется компиляция ссылки на экземпляр шаблон функции "void Sort<int>::sort<std::_Vector_iterator<std::_Vector_val<std::_Simple_types<_Ty>>>>(Itr &&,Itr &&,bool)"
           with
           [
               _Ty=int,
