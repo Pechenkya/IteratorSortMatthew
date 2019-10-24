@@ -22,6 +22,8 @@ private:
 	{
 		if (stable)
 		{
+			std::cout << "Merge" << std::endl;
+
 			aux = new std::vector<T>(end - begin);
 			typename std::remove_reference<Itr>::type temp_itr = begin;
 			for (T& t : *aux)
@@ -34,6 +36,7 @@ private:
 		}
 		else
 		{
+			std::cout << "Quick Sort" << std::endl;
 			quick_sort(std::forward<Itr>(begin), std::forward<Itr>(end - 1));
 		}
 	}
@@ -122,14 +125,14 @@ private:
 
 
 	template<typename Itr>
-	static int dual_pivot_partition(const Itr& pivot1, const Itr& pivot2, Itr&& lesst, Itr&& greater)
+	static typename std::iterator_traits<Itr>::difference_type dual_pivot_partition(const Itr& pivot1, const Itr& pivot2, Itr&& less_n, Itr&& greater)
 	{
-		for (typename std::remove_reference<Itr>::type k = lesst; k <= greater; ++k)
+		for (typename std::remove_reference<Itr>::type k = less_n; k <= greater; ++k)
 		{
 			if (less(k, pivot1))
 			{
-				swap(k, lesst);
-				++lesst;
+				swap(k, less_n);
+				++less_n;
 			}
 			else if (less(pivot2, k))
 			{
@@ -141,16 +144,16 @@ private:
 
 				if (less(k, pivot1))
 				{
-					swap(k, lesst);
-					++lesst;
+					swap(k, less_n);
+					++less_n;
 				}
 			}
 		}
 
-		swap(lesst - 1, pivot1);
+		swap(less_n - 1, pivot1);
 		swap(greater + 1, pivot2);
 
-		return greater - lesst;
+		return greater - less_n;
 	}
 
 
@@ -182,10 +185,10 @@ private:
 		typename std::iterator_traits<Itr>::difference_type dist = dual_pivot_partition(begin, end, std::forward<Itr>(less), std::forward<Itr>(greater));
 
 		//Sorting subarrays
+		
 		if(less - begin >= 2)
 			quick_sort(begin, less - 2);
-
-		if(end - greater <= 2)
+			
 			quick_sort(greater + 2, end);
 
 		//For equal elements
@@ -221,7 +224,9 @@ private:
 	template<typename Itr>
 	static void insertion_sort(const Itr& begin, const Itr& end)
 	{
-		
+		if (begin == end)
+			return;
+
 		for (typename std::remove_reference<Itr>::type outer = begin + 1; outer < end; ++outer)
 		{
 			for (typename std::remove_reference<Itr>::type inner = outer;; --inner)

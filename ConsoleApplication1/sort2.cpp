@@ -59,7 +59,7 @@ int main()
 	//std::ofstream outw("Sorted words.txt");
 	std::ofstream outw("Sorted vector.txt");
 
-	int size = 10000000;
+	int size = 100000000;
 
 	std::vector <int> vector_elements(size);
 	//std::vector <std::string> vector_elements{ "Back", "Hall", "Anime", "Counter-Strike", "Horisontal", "GGWP", "School", "Piramide", "Hall", "Matthew-Gay" };
